@@ -64,7 +64,7 @@ export const DOC_TOPICS: DocTopic[] = [
     id: 'vault',
     title: 'Notes and the vault',
     blurb: 'Plain markdown files in a folder you own.',
-    keywords: 'vault folder files markdown frontmatter daily note folder note storage',
+    keywords: 'vault folder files markdown frontmatter folder note storage',
     sections: [
       {
         title: 'Where things live',
@@ -121,7 +121,7 @@ export const DOC_TOPICS: DocTopic[] = [
         blocks: [
           {
             kind: 'p',
-            text: 'A task is a markdown checkbox. Write one anywhere and it appears in the Tasks view and on the calendar.'
+            text: 'A task is a markdown checkbox. Write one anywhere, and the tokens below make it filterable from a query or views screen.'
           },
           {
             kind: 'example',
@@ -186,58 +186,12 @@ export const DOC_TOPICS: DocTopic[] = [
     ]
   },
 
-  // ----------------------------------------------------------------- events
-  {
-    id: 'events',
-    title: 'Dates and events',
-    blurb: 'A note becomes an event when it has a date and a time.',
-    keywords: 'event calendar date start end location ics apple outlook graph subscribe',
-    sections: [
-      {
-        title: 'Making a note an event',
-        blocks: [
-          {
-            kind: 'example',
-            code: '---\ndate: 2026-08-09\nstart: "17:00"\nend: "17:30"\nlocation: Anywhere quiet\n---'
-          },
-          {
-            kind: 'p',
-            text: 'A bare `date:` only files the note under that day. Without that rule every daily note would become an all-day event and bury the real calendar.'
-          }
-        ]
-      },
-      {
-        title: 'Other calendars',
-        blocks: [
-          {
-            kind: 'table',
-            head: ['Source', 'How'],
-            rows: [
-              ['Vault notes and tasks', 'Parsed from frontmatter and checkboxes'],
-              ['Apple Calendar (macOS)', 'EventKit — read and write, needs full access'],
-              ['Outlook / Microsoft', 'Graph, device-code sign-in — read and write'],
-              ['Any ICS feed', 'Subscribed by URL, read-only, cached 10 minutes']
-            ]
-          },
-          {
-            kind: 'p',
-            text: '**ICS is the zero-configuration path.** Google publishes a secret iCal address under Settings › Integrate calendar; paste it into Settings › Subscribe to a calendar.'
-          },
-          {
-            kind: 'note',
-            text: 'On macOS 14 and later, calendar permission comes in two grades and only **full access** can read events. Write-only lets Stone add an event but shows an empty calendar.'
-          }
-        ]
-      }
-    ]
-  },
-
   // ------------------------------------------------------------------ links
   {
     id: 'links',
     title: 'Links, embeds and tags',
-    blurb: 'Wikilinks, backlinks, transclusion, and the graph.',
-    keywords: 'wikilink backlink link embed transclude tag graph rename mention alias',
+    blurb: 'Wikilinks, backlinks and transclusion.',
+    keywords: 'wikilink backlink link embed transclude tag rename mention alias',
     sections: [
       {
         title: 'Linking',
@@ -341,7 +295,7 @@ export const DOC_TOPICS: DocTopic[] = [
           },
           {
             kind: 'p',
-            text: 'A comment can also span lines: `%%` alone on a line opens one and the next `%%` closes it. Commented text is dimmed rather than hidden — this is an editor, and text that disappears the moment the caret leaves is text you will be surprised by later — but it never reaches a PDF, an HTML export, the Tasks view or the calendar. Commenting a task out really does park it.'
+            text: 'A comment can also span lines: `%%` alone on a line opens one and the next `%%` closes it. Commented text is dimmed rather than hidden — this is an editor, and text that disappears the moment the caret leaves is text you will be surprised by later — but it never reaches a PDF, an HTML export, or a query. Commenting a task out really does park it.'
           },
           {
             kind: 'example',
@@ -489,6 +443,15 @@ export const DOC_TOPICS: DocTopic[] = [
           {
             kind: 'note',
             text: 'The menu only opens where a backslash could start a command: inside `$…$`, inside `$$…$$`, and inside a ```math fence. In prose a backslash is just a backslash.'
+          },
+          {
+            kind: 'p',
+            text: 'A `\\newcommand` written anywhere in the note — like a preamble — works in every equation in that note, not only the one it was written in:'
+          },
+          {
+            kind: 'example',
+            code: '\\newcommand{\\R}{\\mathbb{R}}\n\\newcommand{\\norm}[1]{\\lVert #1 \\rVert}\n\n$x \\in \\R$ and $\\norm{v}$ both pick it up.',
+            caption: 'Defined once, used anywhere in the note.'
           }
         ]
       },
@@ -511,6 +474,10 @@ export const DOC_TOPICS: DocTopic[] = [
           {
             kind: 'note',
             text: 'For a pointer, a lopsided tree or a running algorithm, Mermaid is the wrong tool — see **Program figures**.'
+          },
+          {
+            kind: 'note',
+            text: '**⌘⇧A** asks Claude to draw one instead of writing the fence by hand — Diagram mode for a flowchart, Structure mode for a `boxes`, `memory`, `tree` or `algo` figure. See **Asking Claude**.'
           }
         ]
       }
@@ -565,7 +532,7 @@ export const DOC_TOPICS: DocTopic[] = [
           },
           {
             kind: 'note',
-            text: 'A query block is always a lens. It never writes — this is what makes a daily note assemble itself.'
+            text: 'A query block is always a lens. It never writes, so any page can safely assemble a live view of the vault.'
           }
         ]
       }
@@ -1454,34 +1421,6 @@ export const DOC_TOPICS: DocTopic[] = [
     ]
   },
 
-  // ------------------------------------------------------------------ audio
-  {
-    id: 'audio',
-    title: 'Recording and transcripts',
-    blurb: 'Record a lecture; every block is stamped with its moment.',
-    keywords: 'audio record recording lecture transcript transcribe stamp timestamp playback mic',
-    sections: [
-      {
-        title: 'Stamped notes',
-        blocks: [
-          {
-            kind: 'p',
-            text: 'While a recording runs, every new block you start gets the moment it was started written in front of it. Click one during playback and the audio jumps there; while it plays, the block whose moment has just passed is lit.'
-          },
-          {
-            kind: 'example',
-            code: '[04:12](recording.webm#t=252) The bit about eigenvalues',
-            caption: 'The stamp is an ordinary markdown link — the note keeps working elsewhere.'
-          },
-          {
-            kind: 'p',
-            text: 'The **Transcript** panel holds the transcription once it has been made, and follows along with playback.'
-          }
-        ]
-      }
-    ]
-  },
-
   // ----------------------------------------------------------------- claude
   {
     id: 'claude',
@@ -1517,8 +1456,8 @@ export const DOC_TOPICS: DocTopic[] = [
   {
     id: 'capture',
     title: 'Capture and the web clipper',
-    blurb: 'Get something into the vault without opening the window.',
-    keywords: 'capture quick add global shortcut menu bar url scheme stone:// clipper bookmarklet browser',
+    blurb: 'Reach the vault without opening the window.',
+    keywords: 'capture global shortcut menu bar url scheme stone:// clipper bookmarklet browser',
     sections: [
       {
         title: 'From outside the app',
@@ -1526,15 +1465,15 @@ export const DOC_TOPICS: DocTopic[] = [
           {
             kind: 'list',
             items: [
-              'A **global shortcut** — `Ctrl/Cmd Shift Space` by default, rebindable.',
-              'A **menu-bar icon**, so capture survives the window being closed.',
+              'A **global shortcut** — `Ctrl/Cmd Shift Space` by default, rebindable — raises Stone from anywhere.',
+              'A **menu-bar icon**, so it survives the window being closed.',
               '**`stone://` links**, which any script or app can fire.'
             ]
           },
           {
             kind: 'example',
-            code: 'stone://capture?text=Buy%20milk\nstone://open?path=Projects/Website.md\nstone://daily',
-            caption: 'The three URL routes.'
+            code: 'stone://open?path=Projects/Website.md',
+            caption: 'Open a specific note from outside the app.'
           }
         ]
       },
@@ -1647,10 +1586,9 @@ export const DOC_TOPICS: DocTopic[] = [
             mono: true,
             rows: [
               ['Ctrl/Cmd K', 'Search everything, or run a command'],
-              ['Ctrl/Cmd J', 'Quick-add a task from anywhere'],
-              ['Ctrl/Cmd T', 'Jump to today'],
+              ['Ctrl/Cmd O', 'Open a folder'],
               ['Ctrl/Cmd N', 'New note'],
-              ['Ctrl/Cmd 1–8', 'Today, Notes, Calendar, Tasks, Graph, Views, Canvas, Documents'],
+              ['Ctrl/Cmd 1–4', 'Notes, Views, Canvas, Documents'],
               ['Ctrl/Cmd B, I', 'Bold, italic'],
               ['Ctrl/Cmd Shift M', 'Highlight'],
               ['Ctrl/Cmd Shift 8', 'Bullet list'],
@@ -1659,6 +1597,7 @@ export const DOC_TOPICS: DocTopic[] = [
               ['Ctrl/Cmd Shift K', 'Hyperlink'],
               ['Ctrl/Cmd Enter', 'Turn the line into a task, or cycle its status'],
               ['Ctrl/Cmd Shift Enter', 'Run the code block the caret is in'],
+              ['Shift Enter', 'Leave the code block or diagram the caret is in, onto the line after it'],
               ['Ctrl/Cmd Shift Space', 'Capture, from any app']
             ]
           },
