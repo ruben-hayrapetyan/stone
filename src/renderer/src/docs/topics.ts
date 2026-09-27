@@ -718,16 +718,16 @@ export const DOC_TOPICS: DocTopic[] = [
   {
     id: 'figures',
     title: 'Program figures',
-    blurb: 'memory, boxes, list, tree, graph, types, hash, chart, threads, grammar and algo — the pictures on the whiteboard.',
+    blurb: 'memory, boxes, list, tree, graph, types, hash, chart, threads, grammar, bitfield and algo — the pictures on the whiteboard.',
     keywords:
-      'memory boxes list linked list chain node next doubly circular cycle tree graph edge vertex weighted directed digraph network dijkstra shortest path bfs dfs dag topological dfa nfa automaton state machine types algo hash chart figure diagram pointer heap stack bst binary heap traversal animation array cons pairs class interface hierarchy inheritance uml hash table bucket chaining probe load factor rehash plot growth big-o complexity recurrence master theorem loop invariant stills rotation rotate avl red black threads thread concurrency race interleaving schedule lock monitor deadlock grammar ebnf bnf railroad syntax parse',
+      'memory boxes list linked list chain node next doubly circular cycle tree graph edge vertex weighted directed digraph network dijkstra shortest path bfs dfs dag topological dfa nfa automaton state machine types algo hash chart figure diagram pointer heap stack bst binary heap traversal animation array cons pairs class interface hierarchy inheritance uml hash table bucket chaining probe load factor rehash plot growth big-o complexity recurrence master theorem loop invariant stills rotation rotate avl red black threads thread concurrency race interleaving schedule lock monitor deadlock grammar ebnf bnf railroad syntax parse bitfield bit field ieee 754 sign exponent mantissa significand word register flags packed struct reserved protocol header',
     sections: [
       {
-        title: 'Eleven fences',
+        title: 'Twelve fences',
         blocks: [
           {
             kind: 'p',
-            text: 'What refers to what, what is in memory, what a chain of nodes looks like, what shape a tree is, what a graph connects to what, how a design is put together, where a key lands, how something grows, which schedule two threads ended up running, what a syntax will accept, and what an algorithm does over time. They render in the editor as you type, print into an export, and are plain text in the file — a note that draws one still reads as source in any other editor.'
+            text: 'What refers to what, what is in memory, what a chain of nodes looks like, what shape a tree is, what a graph connects to what, how a design is put together, where a key lands, how something grows, which schedule two threads ended up running, what a syntax will accept, which bits a word is cut into, and what an algorithm does over time. They render in the editor as you type, print into an export, and are plain text in the file — a note that draws one still reads as source in any other editor.'
           },
           {
             kind: 'note',
@@ -1086,6 +1086,39 @@ export const DOC_TOPICS: DocTopic[] = [
           {
             kind: 'note',
             text: 'To draw a table from a book instead, write the buckets out as `3: apple banana` and leave `keys:` off. You cannot do both: a computed table and a typed one would disagree, and the computed one is the reason for the fence.'
+          }
+        ]
+      },
+      {
+        title: 'bitfield — a word, cut into its bits',
+        blocks: [
+          {
+            kind: 'example',
+            code: fence('bitfield', 's:1 sign\nbexp:8 biased exponent\nm:23 significand')
+          },
+          {
+            kind: 'p',
+            text: 'One row a field: a short name for the box, how many bits it owns, and the long name underneath it. Boxes are drawn to scale — the same convention every ISA manual and RFC diagram already uses — with a floor under each one so a one-bit field still fits its own letter.'
+          },
+          {
+            kind: 'table',
+            head: ['Directive', 'Does'],
+            mono: true,
+            rows: [
+              ['s:1 sign', 'A field: id, bit count, name'],
+              ['_:7', 'Bits nothing uses — drawn hatched, not boxed'],
+              ['width: 32', 'Caps a row; the rest wraps onto the next'],
+              ['title: / caption:', 'A line above and a line below the figure']
+            ]
+          },
+          {
+            kind: 'example',
+            code: fence('bitfield', 'width: 32\nopcode:6 op\nrs:5 source\nrt:5 target\nrd:5 dest\nshamt:5 shift\nfunct:6 function'),
+            caption: 'A 32-bit row full to the last bit — no `_` needed when the fields already sum to it.'
+          },
+          {
+            kind: 'note',
+            text: 'Same annotations as every other figure: `*` rings a field, `~` fades it, `#red` colours it, and `| text` adds a second, smaller line under its name — a bit worth calling out without a whole prose paragraph beside the figure.'
           }
         ]
       },
