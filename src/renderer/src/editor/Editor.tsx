@@ -37,6 +37,7 @@ import { cycleStatus, isTaskLine, parseTaskLine, setStatusOnLine } from '@shared
 import { assetPathOf, isExternalUrl } from '@shared/attachments'
 import { fenceInfo } from '@shared/code-langs'
 import { isFoldable, livePreview, toggleFold } from './live-preview'
+import { closeComments } from './close-comments'
 import { blockHandles } from './blocks'
 import { notePathFacet } from './run-code'
 import { slashMenu } from './slash'
@@ -641,6 +642,7 @@ export function Editor({
       indentOnInput(),
       bracketMatching(),
       closeBrackets(),
+      closeComments(),
       autocompletion({
         override: [
           slashMenu,
